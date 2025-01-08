@@ -1,5 +1,5 @@
 # Import the Flask class from the flask module
-from flask import Flask, make_response
+from flask import Flask, make_response, request
 
 # Create an instance of the Flask class, passing in the name of the current module
 app = Flask(__name__)
@@ -83,3 +83,30 @@ def index_explicit():
     # Return the response object
     return resp
 
+@app.route("/data")
+def get_data():
+    try:
+        # Check if 'data' exists and has a length greater than 0
+        if data and len(data) > 0:
+            # Return a JSON response with a message indicating the length of the data
+            return {"message": f"Data of length {len(data)} found"}
+        else:
+            # If 'data' is empty, return a JSON response with a 500 Internal Server Error status code
+            return {"message": "Data is empty"}, 500
+    except NameError:
+        # Handle the case where 'data' is not defined
+        # Return a JSON response with a 404 Not Found status code
+        return {"message": "Data not found"}, 404
+
+@app.route("/name_search")
+def find_person():
+    query = request.args.get('q')
+
+    if not query:
+        return {"message":"Query parameter 'q' is missing"}, 422
+    
+    for person in data:
+        if query.lower() in person["first_name"].lower():
+            return person
+
+    return {"message":"Person. not found"}, 404

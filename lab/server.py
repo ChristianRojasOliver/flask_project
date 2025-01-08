@@ -110,3 +110,10 @@ def find_person():
             return person
 
     return {"message":"Person. not found"}, 404
+
+@app.get("/count")
+def count_item():
+    try:
+        return {"data count": len(data)}, 200
+    except NameError:
+        return {"message":"data not defined"}, 500 

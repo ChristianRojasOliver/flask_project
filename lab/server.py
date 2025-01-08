@@ -4,6 +4,8 @@ from flask import Flask, make_response
 # Create an instance of the Flask class, passing in the name of the current module
 app = Flask(__name__)
 
+
+
 # Define a route for the root URL ("/")
 @app.route("/")
 def index():

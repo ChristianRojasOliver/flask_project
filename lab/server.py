@@ -117,3 +117,11 @@ def count_item():
         return {"data count": len(data)}, 200
     except NameError:
         return {"message":"data not defined"}, 500 
+
+@app.route("/person/<uuid:id>")
+def find_by_uuid(id):
+    for person in data:
+        if person["id"] == str(id):
+            return person
+
+    return {"message":"Person not found"}, 404

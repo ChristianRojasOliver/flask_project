@@ -1,5 +1,5 @@
 # Import the Flask class from the flask module
-from flask import Flask
+from flask import Flask, make_response
 
 # Create an instance of the Flask class, passing in the name of the current module
 app = Flask(__name__)
@@ -14,4 +14,13 @@ def index():
 @app.route("/no_content")
 def no_content():
     # Send custom HTTP code back with a tuple
-    return ("No content found", 204)
+    return ({"message": "No content found"}, 204)
+
+@app.route("/exp")
+def index_explicit():
+    # Create a response object with the message "Hello World"
+    resp = make_response({"message": "Hello World"})
+    # Set the status code of the response to 200
+    resp.status_code = 200
+    # Return the response object
+    return resp
